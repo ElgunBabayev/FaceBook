@@ -1,0 +1,27 @@
+create database Facebook
+
+create table Users(
+Id int identity primary key,
+FullName nvarchar(50),
+ProfilePhoto nvarchar(200),
+Biography nvarchar(200),
+PostCount int
+)
+
+create table Posts(
+Id int identity primary key,
+Image nvarchar(150),
+Text nvarchar(300),
+UserId int references Users(Id)
+)
+
+create table Comments(
+Id int primary key identity,
+Text nvarchar(300),
+PostId int references Posts(Id)
+)
+
+create view UserPost as
+Select p.Image 'Image',p.Text 'Text',u.Fullname 'User' from Posts as p
+join Users as u
+on p.UserId = u.Id
